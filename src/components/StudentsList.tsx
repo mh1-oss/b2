@@ -3,7 +3,7 @@ import { studentsSelections } from '@/lib/schema';
 import { desc } from 'drizzle-orm';
 
 export default async function StudentsList() {
-    const selections = await db.select().from(studentsSelections).orderBy(desc(studentsSelections.createdAt));
+    const selections = await db.select().from(studentsSelections).orderBy(studentsSelections.id);
 
     return (
         <div className="card">
@@ -27,7 +27,7 @@ export default async function StudentsList() {
                         <tbody>
                             {selections.map((student, index) => (
                                 <tr key={student.id}>
-                                    <td>{selections.length - index}</td>
+                                    <td>{index + 1}</td>
                                     <td>{student.studentName}</td>
                                     <td>{student.seminarChoice}</td>
                                     <td dir="ltr" style={{ textAlign: 'right' }}>

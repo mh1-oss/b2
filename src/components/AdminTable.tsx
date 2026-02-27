@@ -94,7 +94,7 @@ export default function AdminTable({ selections }: { selections: StudentSelectio
                         <tbody>
                             {selections.map((student, index) => (
                                 <tr key={student.id}>
-                                    <td>{selections.length - index}</td>
+                                    <td>{index + 1}</td>
                                     <td>{student.studentName}</td>
 
                                     <td>

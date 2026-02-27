@@ -53,7 +53,7 @@ export default async function AdminPage({
         );
     }
 
-    const selections = await db.select().from(studentsSelections).orderBy(desc(studentsSelections.createdAt));
+    const selections = await db.select().from(studentsSelections).orderBy(studentsSelections.id);
 
     return (
         <main className="container">

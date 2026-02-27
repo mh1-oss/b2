@@ -4,22 +4,22 @@ import { useState } from 'react';
 import { submitSelection } from '@/app/actions';
 
 const SEMINAR_OPTIONS = [
-    'Differences between cyclic triaxial test and cyclic simple shear test',
-    'Zones subjected to liquefaction in zoned earth dams',
-    'Methods used for attenuation of waves caused by machines',
-    'Influence of vibration on skin friction of piles',
-    'Correlation between the earthquake magnitude and intensity with acceleration of excitation',
-    'Dynamic active earth pressure behind retaining walls',
-    'Hydrodynamic effects of pore water',
-    'Hysteresis damping',
-    'Allowable settlement in machine foundations',
-    'Shapes of dynamic load functions',
-    'Zone of influence around driven piles',
-    'Method of calculation of natural frequency of foundations',
-    'Calculation of Seismic Load in Design Codes'
+    '1. Differences between cyclic triaxial test and cyclic simple shear test',
+    '2. Zones subjected to liquefaction in zoned earth dams',
+    '3. Methods used for attenuation of waves caused by machines',
+    '4. Influence of vibration on skin friction of piles',
+    '5. Correlation between the earthquake magnitude and intensity with acceleration of excitation',
+    '6. Dynamic active earth pressure behind retaining walls',
+    '7. Hydrodynamic effects of pore water',
+    '8. Hysteresis damping',
+    '9. Allowable settlement in machine foundations',
+    '10. Shapes of dynamic load functions',
+    '11. Zone of influence around driven piles',
+    '12. Method of calculation of natural frequency of foundations',
+    '13. Calculation of Seismic Load in Design Codes'
 ];
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ takenSeminars = [] }: { takenSeminars?: string[] }) {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
@@ -77,9 +77,14 @@ export default function RegistrationForm() {
                     <label htmlFor="seminarChoice">موضوع السمينار</label>
                     <select id="seminarChoice" name="seminarChoice" required defaultValue="">
                         <option value="" disabled>-- اختر موضوعاً --</option>
-                        {SEMINAR_OPTIONS.map((option, idx) => (
-                            <option key={idx} value={option}>{option}</option>
-                        ))}
+                        {SEMINAR_OPTIONS.map((option, idx) => {
+                            const isTaken = takenSeminars.includes(option);
+                            return (
+                                <option key={idx} value={option} disabled={isTaken}>
+                                    {option} {isTaken ? '(محجوز)' : ''}
+                                </option>
+                            );
+                        })}
                     </select>
                 </div>
 

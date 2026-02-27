@@ -1,9 +1,16 @@
+import { db } from '@/lib/db';
+import { studentsSelections } from '@/lib/schema';
 import RegistrationForm from '@/components/RegistrationForm';
 import StudentsList from '@/components/StudentsList';
 import PrintButton from '@/components/PrintButton';
 import { Suspense } from 'react';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const selections = await db.select().from(studentsSelections);
+  const takenSeminars = selections.map(s => s.seminarChoice);
+
   return (
     <main className="container">
       <header className="header">
@@ -13,7 +20,7 @@ export default function Home() {
 
       <div className="main-grid">
         <aside className="no-print">
-          <RegistrationForm />
+          <RegistrationForm takenSeminars={takenSeminars} />
         </aside>
 
         <section>

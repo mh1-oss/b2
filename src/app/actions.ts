@@ -14,6 +14,16 @@ export async function submitSelection(formData: FormData) {
     }
 
     try {
+        const existingName = await db.select().from(studentsSelections).where(eq(studentsSelections.studentName, studentName.trim()));
+        if (existingName.length > 0) {
+            return { error: 'هذا الاسم مسجل مسبقاً. يرجى التحقق من القائمة.' };
+        }
+
+        const existingSeminar = await db.select().from(studentsSelections).where(eq(studentsSelections.seminarChoice, seminarChoice));
+        if (existingSeminar.length > 0) {
+            return { error: 'عذراً، هذا السمينار تم اختياره مسبقاً من قبل طالب آخر.' };
+        }
+
         await db.insert(studentsSelections).values({
             studentName: studentName.trim(),
             seminarChoice,
@@ -45,6 +55,11 @@ export async function deleteSelection(id: number) {
 
 export async function updateSelection(id: number, newChoice: string) {
     try {
+        const existingSeminar = await db.select().from(studentsSelections).where(eq(studentsSelections.seminarChoice, newChoice));
+        if (existingSeminar.length > 0 && existingSeminar[0].id !== id) {
+            return { error: 'عذراً، هذا السمينار تم اختياره مسبقاً.' };
+        }
+
         await db.update(studentsSelections)
             .set({ seminarChoice: newChoice })
             .where(eq(studentsSelections.id, id));

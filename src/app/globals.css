@@ -163,7 +163,8 @@ table {
   margin-top: 1rem;
 }
 
-th, td {
+th,
+td {
   padding: 1rem;
   text-align: right;
   border-bottom: 1px solid #e2e8f0;
@@ -211,9 +212,27 @@ tr:hover {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
   .main-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  th,
+  td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -221,28 +240,51 @@ tr:hover {
   body {
     background: white;
     color: black;
+    font-size: 13pt;
   }
-  
+
+  .container {
+    padding: 0;
+  }
+
   .no-print {
     display: none !important;
   }
-  
+
   .print-only {
     display: block;
   }
-  
+
   .main-grid {
     grid-template-columns: 1fr;
     display: block;
   }
-  
+
   .card {
     border: none;
     box-shadow: none;
     padding: 0;
   }
-  
-  table, th, td {
+
+  table {
+    width: 100%;
+    page-break-inside: auto;
+  }
+
+  tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  /* Force exactly 10 names per printed page */
+  tbody tr:nth-child(10n) {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  th,
+  td {
     border: 1px solid black;
+    padding: 0.6rem;
   }
 }

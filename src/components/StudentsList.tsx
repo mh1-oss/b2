@@ -7,7 +7,7 @@ export default async function StudentsList() {
 
     return (
         <div className="card">
-            <h2 className="card-title">قائمة الطلاب المسجلين</h2>
+            <h2 className="card-title no-print">قائمة الطلاب المسجلين</h2>
 
             {selections.length === 0 ? (
                 <div className="empty-state">
